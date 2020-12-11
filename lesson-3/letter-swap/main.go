@@ -59,9 +59,9 @@ func main() {
 
 	switch mode {
 	case "encode":
-		fmt.Println("Your result: ", encodeString(input))
+		fmt.Println("Your result: ", swapString(input, encodeVowels))
 	case "decode":
-		fmt.Println("Your result: ", decodeString(input))
+		fmt.Println("Your result: ", swapString(input, decodeVowels))
 	}
 
 }
@@ -72,26 +72,14 @@ func validInput(s string) bool {
 	return !match && len(s) > 0
 }
 
-func encodeString(s string) string {
+func swapString(s string, mapping map[rune]rune) string {
 	return strings.Map(func(r rune) rune {
-		encoded, ok := encodeVowels[r]
+		value, ok := mapping[r]
 
 		if ok == false {
 			return r
 		}
 
-		return encoded
-	}, s)
-}
-
-func decodeString(s string) string {
-	return strings.Map(func(r rune) rune {
-		decoded, ok := decodeVowels[r]
-
-		if ok == false {
-			return r
-		}
-
-		return decoded
+		return value
 	}, s)
 }
